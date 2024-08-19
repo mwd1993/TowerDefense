@@ -1,0 +1,344 @@
+/* General body styles */
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Canvas display style */
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* Health bar container and health bar styles */
+#hpBarContainer {
+    position: absolute;
+    top: 1vw;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30vw; /* Adjust width for responsiveness */
+    height: 3vw; /* Adjust height */
+    background-color: #333;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#hpBar {
+    width: 100%; /* Full width based on current HP percentage */
+    height: 100%;
+    background-color: green;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+#hpText {
+    position: absolute;
+    color: white;
+    font-size: 1.5vw;
+    z-index: 2;
+    text-align: center;
+    width: 100%; /* Center the text over the health bar */
+    pointer-events: none; /* Make sure the text doesn't interfere with any clicks */
+}
+
+/* Upgrade options style (adjusted) */
+#upgradeOptions {
+    position: absolute;
+    top: 2vw;
+    left: 2vw;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1vw;
+    color: white;
+    font-size: 1.5vw;
+    border-radius: 5px;
+    width: 18vw;
+    height: 60vh; /* Increased height for visibility */
+    max-height: 60vh; /* Limit height */
+    overflow-y: auto; /* Enable scrolling */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Centered content for menus */
+#menu, #deathScreen, #runSummary {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2vw;
+    border-radius: 10px;
+    width: 25vw; /* Smaller width for desktop */
+    max-width: 300px; /* Limit max width */
+    max-height: 60vh; /* Limit height */
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
+    box-sizing: border-box; /* Ensure padding is included in width/height */
+}
+
+/* Shop container */
+#shop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2vw;
+    border-radius: 10px;
+    width: 60vw; /* Adjusted width */
+    max-width: 800px; /* Optional: set a maximum width for larger screens */
+    height: 70vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+
+/* Buttons inside the UI elements */
+button {
+    padding: 1vw 2vw;
+    font-size: 1.5vw; /* Responsive font size */
+    margin: 1.5vw 0;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%; /* Full width buttons */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+button:hover {
+    background-color: #666;
+}
+
+#exitShopButton {
+    margin-top: 1.5vw;
+    padding: 1vw 2vw;
+    font-size: 1.5vw;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#exitShopButton:hover {
+    background-color: #666;
+}
+
+
+/* Wave container style */
+#waveContainer {
+    position: absolute;
+    top: 6vw;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1vw;
+    color: white;
+    font-size: 1.5vw;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Stats container style */
+#statsContainer {
+    position: absolute;
+    bottom: 2vw;
+    left: 2vw;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1vw;
+    color: white;
+    font-size: 1.5vw;
+    border-radius: 5px;
+    width: 18vw; /* Smaller width for desktop */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Resource container style */
+#resourceContainer {
+    position: absolute;
+    top: 2vw;
+    right: 2vw;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1vw;
+    color: white;
+    font-size: 1.5vw;
+    border-radius: 5px;
+    width: 15vw; /* Adjust width */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* End Run button style */
+#endRunButton {
+    position: absolute;
+    bottom: 2vw;
+    right: 2vw;
+    padding: 1vw 2vw;
+    font-size: 1.5vw;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: auto;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+#endRunButton:hover {
+    background-color: darkred;
+}
+
+/* Media query for smaller devices */
+@media (max-width: 600px) {
+    #hpBarContainer {
+        width: 70vw; /* Adjust width for small screens */
+        height: 5vw; /* Adjust height for small screens */
+    }
+
+    #hpText {
+        font-size: 3vw; /* Larger text on small screens */
+    }
+
+    #waveContainer,
+    #statsContainer,
+    #resourceContainer {
+        width: 80vw; /* Adjust width for small screens */
+    }
+
+    #menu, #shop, #deathScreen, #runSummary {
+        width: 85vw; /* Increase width on smaller screens */
+        max-height: 70vh; /* Adjust height on smaller screens */
+        padding: 5vw; /* Add more padding */
+        box-sizing: border-box; /* Ensure padding doesn't affect width */
+    }
+
+    button {
+        font-size: 4vw; /* Increase button size on smaller screens */
+        padding: 3vw;
+    }
+
+    #endRunButton {
+        font-size: 4vw; /* Increase button size on smaller screens */
+    }
+
+    #upgradeOptions, #statsContainer {
+        width: 80vw; /* Increase width for upgrade and stats on small screens */
+    }
+}
+
+#menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2vw;
+    border-radius: 10px;
+    width: 100vw; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    max-width: none; /* Remove max-width */
+    max-height: none; /* Remove max-height */
+    box-sizing: border-box; /* Include padding in width and height */
+    overflow: hidden; /* Hide overflow to avoid scrollbars */
+}
+
+/* FAQ Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Ensure it appears on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+}
+
+.modal-content {
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%; /* Width of the modal */
+    max-height: 70vh; /* Max height to enable scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    color: white;
+    box-sizing: border-box; /* Include padding and border in width and height */
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* CSS Animation for Fading Out and Moving */
+@keyframes fadeMove {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--moveX, 0px), var(--moveY, 0px));
+    }
+}
+
+/* Apply the animation to the damage splash */
+.damage-splash {
+    position: absolute; /* Ensure it can be positioned anywhere */
+    color: red;
+    font-weight: bold;
+    animation: fadeMove 1s ease-out forwards; /* 1s animation for fading out and moving */
+}
+
+#shopScrollContainer {
+    overflow-y: auto;
+    height: 85%; /* Adjust height to ensure the back button is visible */
+    margin-bottom: 10px; /* Space between content and the back button */
+}
+
+/* Ensure the Back button is always visible below the scrollable content */
+#backButton {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 1vw 2vw;
+    font-size: 1.5vw;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+}

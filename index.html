@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Tower Defense Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Tooltip container */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Tooltip arrow */
+        .tooltip .tooltiptext::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Show the tooltip text when hovering */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Menu -->
+    <div id="menu">
+        <h1>Welcome to Tower Defense</h1>
+        <button id="playButton">Play</button>
+        <button id="shopButton">Shop</button>
+        <button id="faqButton">FAQ</button>
+        <div id="resourceDisplay">
+            <p>Common Resources: <span id="commonResourceMenu">0</span></p>
+            <p>Rare Resources: <span id="rareResourceMenu">0</span></p>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Frequently Asked Questions</h2>
+            <p><strong>What is this game about?</strong></p>
+            <p>This is a tower defense game where you defend your base from waves of enemies using a central tower. You can upgrade your tower with both permanent and temporary upgrades to improve its stats and survive longer.</p>
+            
+            <p><strong>How do I upgrade my tower?</strong></p>
+            <p>There are two types of upgrades: temporary and permanent. Temporary upgrades can be purchased during a run using common resources and last until the end of that run. Permanent upgrades require rare resources and are applied permanently to your tower.</p>
+            
+            <p><strong>What are the resources used for?</strong></p>
+            <p>Common resources are used for temporary upgrades, while rare resources are used for permanent upgrades. These resources are collected by defeating enemies during gameplay.</p>
+            
+            <p><strong>What happens when I lose all my health?</strong></p>
+            <p>When your tower's health drops to zero, the game ends. You can then view a summary of your run, including the number of enemies killed and waves completed.</p>
+            
+            <p><strong>How do I start a new game?</strong></p>
+            <p>Click the 'Play' button on the main menu to start a new game. The game will reset and begin from the first wave.</p>
+            
+            <p><strong>Can I change the game speed?</strong></p>
+            <p>Yes, you can adjust the game speed using the speed control slider located at the bottom of the game UI.</p>
+        </div>
+    </div>
+
+    <!-- Shop Menu -->
+    <div id="shop" style="display: none;">
+        <h1>Upgrade Your Tower</h1>
+        <div id="shopUpgradeInfo">
+            <p>Rare Resources: <span id="rareResourceShop">0</span></p>
+        </div>
+        <!-- This is where we will add the buttons dynamically -->
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="deathScreen" style="display: none;">
+        <h1>Game Over</h1>
+        <p>Total Enemies Killed: <span id="totalKills">0</span></p>
+        <p>Total Waves Completed: <span id="totalWaves">0</span></p>
+        <button id="returnToMenuButton">Main Menu</button>
+    </div>
+
+    <!-- Run Summary -->
+    <div id="runSummary" style="display: none;">
+        <h2>Run Summary</h2>
+        <p>Total Enemies Killed: <span id="summaryKills">0</span></p>
+        <p>Total Waves Completed: <span id="summaryWaves">0</span></p>
+        <button id="closeSummaryButton">Close</button>
+    </div>
+
+    <!-- Game UI Elements (hidden until game starts) -->
+    <div id="gameUI" style="display: none;">
+        <div id="speedControlContainer" style="position: absolute; bottom: 20px; left: 48%;">
+            <label for="speedControl">Game Speed:</label>
+            <input type="range" id="speedControl" min="0.25" max="3" step="0.25" value="1">
+            <span id="speedValue">1.0</span>x
+        </div>
+
+        <div id="hpBarContainer">
+            <div id="hpBar"></div>
+            <div id="hpText">100 / 100</div> 
+        </div>
+        <div id="waveContainer">
+            <h3>Wave: <span id="currentWave">1</span></h3>
+        </div>
+        <div id="statsContainer">
+            <h3>Current Tower Stats</h3>
+            <ul id="statsList"></ul>
+            <button id="upgradeButton">Upgrade (Common Resource)</button>
+        </div>
+        <button id="endRunButton" style="position: absolute; bottom: 20px; right: 20px; display: none;">End Run</button>
+        <div id="resourceContainer">
+            <h3>Resources</h3>
+            <p>Common: <span id="commonResource">0</span></p>
+            <p>Rare: <span id="rareResource">0</span></p>
+        </div>
+    </div>
+
+    <!-- Include the Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Include the modular scripts -->
+    <script src="shopItems.js"></script>
+    <script src="scene.js"></script>
+    <script src="game.js"></script>
+    <script src="ui.js"></script>
+    <script src="utils.js"></script>
+    <script src="music.js"></script>
+
+</body>
+</html>
